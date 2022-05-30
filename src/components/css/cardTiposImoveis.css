@@ -1,0 +1,24 @@
+.carousel-2 .flickity-viewport {
+  min-height: 420px;
+}
+.carousel-3 .flickity-page-dots {
+  display: none;
+}
+.carousel-3 .flickity-viewport {
+  margin-left: -5%;
+}
+
+.ul_hozintal__scroll {
+  list-style-type: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.li_scroll {
+  display: inline;
+  padding: 14px;
+  border: 1px solid #eee;
+  margin: 8px;
+  border-radius: 6px;
+}

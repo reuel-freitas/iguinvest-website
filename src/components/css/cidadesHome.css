@@ -1,0 +1,14 @@
+.img-cidades {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 240px;
+  border-radius: 22px 22px 0 0;
+}
+.card-funcionario {
+  height: 360px;
+  width: auto;
+}
+.card-cidades .react-multi-carousel-track {
+  height: 360px;
+  width: 100%;
+}

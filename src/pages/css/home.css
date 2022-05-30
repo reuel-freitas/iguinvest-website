@@ -1,0 +1,124 @@
+.hero {
+  background-image: url(../assets/hero-site.png);
+  background-size: cover;
+  width: 100%;
+  background-position: center;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-between;
+}
+.content-title-hero {
+  text-align: center;
+  margin: 8em 0 0 0;
+}
+.title-hero {
+  color: white;
+  font-size: 4em;
+  font-weight: 700;
+}
+.subtitle-hero {
+  color: white;
+  font-size: 2em;
+  font-weight: 500;
+}
+.hr {
+  height: 4px !important;
+  width: 400px;
+  color: white;
+  padding: 0;
+  opacity: 1;
+  border-radius: 8px;
+  margin: 4px auto;
+  text-align: center;
+}
+.carousel-super-destaque {
+  padding: 2px;
+}
+.row_content_logo__nossa_historia {
+  padding: 0 0 1em 6em;
+}
+.align-content-center {
+  display: flex;
+  justify-content: space-around;
+}
+.container_nossa___historia {
+  background-color: #f5f5f5;
+  padding: 0.6em;
+  margin: 2em;
+}
+.logo_nossa__historia {
+  padding: 2em 1em;
+  width: 200px;
+  margin: 0 0 0 14.4em;
+}
+.text_nossa__historia {
+  padding: 1em;
+}
+
+.text_nossa__historia p {
+  color: #222222;
+  font-family: var(--fontFamily);
+  font-weight: 400;
+  font-size: 16px;
+  padding: 0 5em 1em 0;
+}
+.text_nossa__historia h2 {
+  color: #222222;
+  font-size: 2.4em;
+  font-weight: 600;
+  font-family: var(--fontFamily);
+}
+.youtube_section {
+  text-align: center;
+}
+.youtube_section h3 {
+  font-size: 2em;
+  font-weight: 600;
+  padding: 0 0 0.4em;
+}
+iframe {
+  width: 80%;
+  height: 460px;
+  border-radius: 8px;
+}
+
+@media only screen and (max-width: 600px) {
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    align-content: space-between;
+  }
+  .content-title-hero {
+    text-align: center;
+    margin: 2em 0 0 0;
+  }
+  .logo_nossa__historia {
+    margin: 1em;
+    width: 100%;
+  }
+  .text_nossa__historia {
+    margin: 1em 0;
+  }
+
+  .text_nossa__historia p {
+    color: #222222;
+    padding: 0;
+  }
+
+  .container_nossa___historia {
+    padding: 0.6em;
+    margin: 1em;
+  }
+  .logo_nossa__historia {
+    padding: 0;
+  }
+  .navbar-light .navbar-nav .nav-link {
+    font-size: 14px;
+  }
+}

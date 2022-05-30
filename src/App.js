@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+
+import { useContext } from 'react'
+import { AppRoutes } from './Routes';
+import { Header } from './components/layout/header';
+import Footer from './components/layout/footer'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Loading } from './components/Loading';
+import { AppContext, AppProvider } from './contexts/AppContext';
 import './App.css';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './config/theme'
 
 function App() {
+  const { loading } = useContext(AppContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <AppProvider>
+        <div>
+          <Header />
+          <AppRoutes />
+          <Footer />
+          {loading && <Loading />}
+        </div>
+      </AppProvider>
+    </ThemeProvider>
   );
 }
 

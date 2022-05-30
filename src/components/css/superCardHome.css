@@ -1,0 +1,90 @@
+.card-imoveis {
+  width: 100%;
+  min-width: 300px;
+  max-width: 390px;
+  height: 460px;
+  border-radius: 16px;
+  border: 1px solid #ebebeb;
+}
+
+.card-imoveis_body {
+  padding: 16px;
+}
+
+.card-imoveis_img__top {
+  height: 200px;
+  background-size: cover;
+  border-radius: 16px 16px 0 0;
+}
+
+.card-imoveis_card__text,
+p {
+  font-family: --(font-family);
+  font-weight: 500;
+  font-size: 13px;
+  text-align: left;
+  color: #a2a2a2;
+}
+
+.card-imoveis_icon__ubication {
+  padding: 0 4px 4px 0px;
+}
+
+.card-imoveis_icon__shower {
+  padding: 0 4px 4px 10px;
+}
+
+.card-imoveis_icon__left {
+  padding: 0 4px 4px 0;
+}
+
+.card-imoveis_icon__bed {
+  padding: 0 4px 0px 10px;
+}
+
+.card-imoveis_area {
+  display: 'flex';
+  flex-direction: 'row';
+  height: 40px;
+}
+
+.card-imoveis_body_title {
+  display: 'flex';
+  justify-content: 'flex-start';
+  align-items: 'center';
+  height: 60px;
+}
+
+.card-imoveis_card__title {
+  font-size: 0.9em;
+  color: '#000';
+}
+
+.action-buttons {
+  /* display: inline-flex; */
+  margin: 8px 16px;
+}
+
+.button-more_info {
+  height: 40px;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  padding: 4px 6px;
+  color: #222222;
+  font-size: 14px;
+  max-width: 175px;
+  width: 100%;
+}
+
+.button-more_agend {
+  height: 40px;
+  border-radius: 8px;
+  background: #ff385c;
+  border: 1px solid #ff385c;
+  color: #fff !important;
+  padding: 4px 6px;
+  font-size: 14px;
+  max-width: 175px;
+  width: 100%;
+}
