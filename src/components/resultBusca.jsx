@@ -33,7 +33,7 @@ function ResultBusca({ imoveis, paginas, quantidade, filters, setFilters, getImo
     <>
       <Container>
         <Row>
-          {!!imoveis ? imoveis.map((imovel, key) => (
+          {!!imoveis && imoveis.length > 0 ? imoveis.map((imovel, key) => (
             <Col xs="12" sm="12" md="6" lg="4" className="mt-4" key={`imovel:${key}`}>
               <div className="carousel-super-destaque">
                 <div className="card-imoveis">
