@@ -14,80 +14,28 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from '../contexts/AppContext';
 import { Box } from "@mui/material";
 
-function ResultBusca({ cidade, tipo }) {
+function ResultBusca({ imoveis, paginas, quantidade, filters, setFilters, getImoveis }) {
   // pega a quantidade de imoveis e calcula a quatidade de páginas
   const { setLoading } = useContext(AppContext)
 
   const navigate = useNavigate();
-
-  const [quantidade, setQuantidade] = useState([]);
-  let quantidadeImoveis = quantidade;
-  let paginas = quantidade > 20 ? Math.round(quantidadeImoveis / 20) : quantidade;
-
-  const [imoveis, setImoveis] = useState([]);
-
-  let page;
-
-  page = 1;
-
-
-  async function getImoveis(cidade, tipo, page) {
-    try {
-      if (!cidade && !tipo) {
-        let res = await axios.get(
-          `https://sleepy-bayou-22688.herokuapp.com/api/imoveisDisponiveis/${page}`
-        );
-        setImoveis(res.data.lista);
-        setQuantidade(res.data.quantidade);
-      } else if (cidade === "" && tipo) {
-        let res = await axios.get(
-          `https://sleepy-bayou-22688.herokuapp.com/api/imoveisDisponiveis/${page}/${tipo}`
-        );
-        setImoveis(res.data.lista);
-        setQuantidade(res.data.quantidade);
-      } else if (cidade && !tipo) {
-        let res = await axios.get(
-          `https://sleepy-bayou-22688.herokuapp.com/api/imoveisDisponiveis/${page}/0/${cidade}`
-        );
-        setImoveis(res.data.lista);
-        setQuantidade(res.data.quantidade);
-      }
-      else {
-        let res = await axios.get(
-          `https://sleepy-bayou-22688.herokuapp.com/api/imoveisDisponiveis/${page}/${tipo}/${cidade}`
-        );
-        setImoveis(res.data.lista);
-        setQuantidade(res.data.quantidade);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    setLoading(true)
-    getImoveis(cidade, tipo, page);
-  }, [cidade, tipo]);
-
-  // Muda a página quando clica no botão da paginação e scrolla até o topo
-  function handlePagination(event) {
-    page = event.currentTarget.textContent;
-    getImoveis(cidade, tipo, page);
-    window.scrollTo(0, 0);
-  }
 
   function handleDetails(imovel) {
     console.log(imovel)
     navigate(`/todososimoveis/${imovel.codigo}`, { state: imovel });
   }
 
+  function handlePagination(event) {
+    setFilters({ ...filters, page: event.currentTarget.textContent });
+    getImoveis(filters?.page, filters?.tipo, filters?.cidade);
+    window.scrollTo(0, 0);
+  }
+
   return (
     <>
       <Container>
         <Row>
-          {imoveis.length > 0 ? imoveis.map((imovel, key) => (
+          {!!imoveis ? imoveis.map((imovel, key) => (
             <Col xs="12" sm="12" md="6" lg="4" className="mt-4" key={`imovel:${key}`}>
               <div className="carousel-super-destaque">
                 <div className="card-imoveis">
@@ -177,7 +125,7 @@ function ResultBusca({ cidade, tipo }) {
               </div>
             </Col>
           )) : (
-            <div>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
               <h6>Nenhum imóvel encontrado com este(s) filtro(s)</h6>
             </div>
           )}

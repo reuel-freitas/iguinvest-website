@@ -2,10 +2,12 @@ import React, { useEffect, useContext, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ResultBusca from "../components/resultBusca";
 import { useLocation } from "react-router-dom";
-import { cidadesDisponiveis, tiposdeImoveisDisponiveis } from "../services/webservice";
-import { Box } from "@mui/material";
+import { cidadesDisponiveis, filtroImovel, tiposdeImoveisDisponiveis } from "../services/webservice";
+import { Box, Button, IconButton } from "@mui/material";
 import { CurrencyFilter } from "../components/CurrencyFilter";
 import { AppContext } from "../contexts/AppContext";
+import SearchIcon from "@mui/icons-material/Search";
+import axios from "axios";
 
 export function TodosOsImoveis() {
 
@@ -14,9 +16,16 @@ export function TodosOsImoveis() {
 
   const [tipos, setTipos] = useState([]);
   const [cidades, setCidades] = useState([]);
+  const [imoveis, setImoveis] = useState([])
+  const [quantidade, setQuantidade] = useState([]);
 
-  const [tipoSelecionado, setTipoSelecionado] = useState(!!location?.state?.tipo ? location.state.tipo.codigo : '');
-  const [cidadeSelecionada, setCidadeSelecionada] = useState(!!location?.state?.cidade ? location.state.cidade.codigo : '');
+  const [filters, setFilters] = useState({
+    cidade: !!location?.state?.cidade ? location.state.cidade.codigo : '',
+    tipo: !!location?.state?.tipo ? location.state.tipo.codigo : '',
+    min: null,
+    max: null,
+    page: 1
+  })
 
   useEffect(() => {
     loadData()
@@ -29,10 +38,44 @@ export function TodosOsImoveis() {
     const res = await tiposdeImoveisDisponiveis(setLoading)
     setTipos(res.lista);
     setLoading(false)
+    await getImoveis(filters?.page, filters?.tipo, filters?.cidade)
   }
 
-  const loadSelectedCity = (e) => {
-    setCidadeSelecionada(e.target.value)
+  let quantidadeImoveis = quantidade;
+
+  let paginas = quantidade > 20 ? Math.round(quantidadeImoveis / 20) : quantidade;
+
+  async function getImoveis(page, tipo, cidade) {
+    try {
+      if (!cidade && !tipo) {
+        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        setImoveis(res.lista);
+        setQuantidade(res.quantidade);
+      } else if (cidade === "" && tipo) {
+        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        setImoveis(res.lista);
+        setQuantidade(res.quantidade);
+      } else if (cidade && !tipo) {
+        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        setImoveis(res.lista);
+        setQuantidade(res.quantidade);
+      }
+      else {
+        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        setImoveis(res.lista);
+        setQuantidade(res.quantidade);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false)
+  }
+
+
+  const handleSubmit = async () => {
+    setLoading(true)
+    await getImoveis(filters?.page, filters?.tipo, filters?.cidade);
+    setLoading(false)
   }
 
   return (
@@ -40,8 +83,22 @@ export function TodosOsImoveis() {
       <Container className="filter-all">
         <Row>
           <Col>
-            <Box sx={{ marginTop: { xs: 2, md: 4 }, display: 'flex', justifyContent: 'center', flexWrap: { xs: 'wrap', md: 'no-wrap' }, gap: 1 }}>
-              <select className="input_todos_imoveis" style={{ padding: '8px 10px', height: '40px', margin: '8px!important', borderRadius: '6px', border: '1px solid rgb(222, 222, 222' }} onChange={(e) => setCidadeSelecionada(e.target.value)} value={cidadeSelecionada}>
+            <Box sx={{
+              marginTop: { xs: 2, md: 4 },
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: { xs: 'wrap', md: 'no-wrap' },
+              gap: 1,
+              backgroundColor: '#cccccc1f',
+              boxShadow: '0px 5px 11px rgb(0 0 0 / 15%)',
+              borderRadius: '16px',
+              padding: 2,
+              alignItems: 'center'
+            }}>
+              <select
+                className="input_todos_imoveis"
+                style={{ padding: '8px 10px', height: '40px', margin: '8px!important', borderRadius: '6px', border: '1px solid rgb(222, 222, 222', maxWidth: '180px' }}
+                onChange={(e) => setFilters({ ...filters, cidade: e.target.value })} value={filters?.cidade}>
                 <option>Cidade</option>
                 {cidades.map((cidade, key) => {
                   return (
@@ -51,7 +108,18 @@ export function TodosOsImoveis() {
                   );
                 })}
               </select>
-              <select className="input_todos_imoveis" style={{ padding: '8px 10px', height: '40px', margin: '8px!important', borderRadius: '6px', border: '1px solid rgb(222, 222, 222' }} onChange={(e) => setTipoSelecionado(e.target.value)} value={tipoSelecionado}>
+              <select
+                className="input_todos_imoveis"
+                style={{
+                  padding: '8px 10px',
+                  height: '40px',
+                  margin: '8px!important',
+                  borderRadius: '6px',
+                  border: '1px solid rgb(222, 222, 222',
+                  maxWidth: '180px',
+                  marginRight: '5px'
+                }}
+                onChange={(e) => setFilters({ ...filters, tipo: e.target.value })} value={filters?.tipo}>
                 <option>Tipo de imóvel</option>
                 {tipos.map((tipo, key) => {
                   return (
@@ -61,18 +129,43 @@ export function TodosOsImoveis() {
                   );
                 })}
               </select>
-              <input className="input_todos_imoveis" style={{ padding: '8px 10px', height: '40px', margin: '8px!important', borderRadius: '6px', border: '1px solid rgb(222, 222, 222' }} name="valorMinimo" type="number" placeholder="Valor Minimo" />
-              <input className="input_todos_imoveis" style={{ padding: '8px 10px', height: '40px', margin: '8px!important', borderRadius: '6px', border: '1px solid rgb(222, 222, 222' }} name="valorMaximo" type="number" placeholder="Valor Maximo" />
+              <CurrencyFilter />
+              <IconButton
+                // onClick={() => navigate('/todososimoveis', { state: { cidade: { codigo: filters?.cidade }, tipo: { codigo: filters?.tipo }, min: filters?.min, max: filters?.max } })}
+                sx={{
+                  display: { xs: 'none', sm: 'none', md: 'flex', lg: 'flex', xl: 'flex' },
+                  color: "#fff",
+                  paddingInline: '10px',
+                  backgroundColor: '#ff0451',
+                  borderRadius: '6px',
+                  padding: 0.78,
+                  marginLeft: 0.5,
+                  maxHeight: '32px',
+                  '&:  hover': {
+                    filter: 'brightness(.7)',
+                    transition: '0.3s ease-in-out',
+                    backgroundColor: '#ff0451'
+                  }
+                }}>
+                <SearchIcon fontSize="small" />
+              </IconButton>
+              <Box
+                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}
+                onClick={handleSubmit}
+              >
+                <Button variant="contained">Buscar</Button>
+              </Box>
             </Box>
-            {/* <Box>
-                <CurrencyFilter />
-              </Box> */}
           </Col>
         </Row>
       </Container>
       <ResultBusca
-        cidade={cidadeSelecionada}
-        tipo={tipoSelecionado}
+        filters={filters}
+        setFilters={setFilters}
+        getImoveis={getImoveis}
+        quantidade={quantidade}
+        paginas={paginas}
+        imoveis={imoveis}
       />
     </>
   )

@@ -29,7 +29,18 @@ export const tiposdeImoveisDisponiveis = async () => {
 
 export const detalheImovel = async id => {
     try {
-        const response = await axios.get(`https://sleepy-bayou-22688.herokuapp.com/api/detalheImovel/${id}`, {headers: {'chave': 'wSK7Jlc7sQfuJ5Gx8/3v61ce5zEqL2vNNzZ8cHert2E='}})
+        const response = await axios.get(`https://sleepy-bayou-22688.herokuapp.com/api/detalheImovel/${id}`, { headers: { 'chave': 'wSK7Jlc7sQfuJ5Gx8/3v61ce5zEqL2vNNzZ8cHert2E=' } })
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const filtroImovel = async (data) => {
+    try {
+        const { page, tipo = '', cidade = '' } = data
+        let url = `https://sleepy-bayou-22688.herokuapp.com/api/imoveisDisponiveis/${page ? page : '1'}${tipo ? `/${tipo}` : ''}${cidade ? `/${cidade}` : ''}`
+        const response = await axios.get(url);
         return response.data
     } catch (error) {
         console.log(error)

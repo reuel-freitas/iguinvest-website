@@ -27,8 +27,6 @@ export function Imovel(props) {
     const location = useLocation();
     const params = useParams();
 
-    console.log(params)
-
     const [showImagesDialog, setShowImagesDialog] = useState(false);
     const [showImagesCarousel, setShowImagesCarousel] = useState(false);
     const [currentImage, setCurrentImage] = useState(0);
