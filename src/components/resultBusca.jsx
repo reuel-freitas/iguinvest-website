@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import axios from "axios";
-
 import iconArea from "../pages/assets/icons/icon-area-1.svg";
 import iconAreaExt from "../pages/assets/icons/icon-area-2.svg";
 import IconBed from "../pages/assets/icons/icon-bed.svg";

@@ -71,7 +71,6 @@ export function TodosOsImoveis() {
     setLoading(false)
   }
 
-
   const handleSubmit = async () => {
     setLoading(true)
     await getImoveis(filters?.page, filters?.tipo, filters?.cidade);

@@ -84,13 +84,15 @@ export function Home() {
         <CardTiposImoveis />
         <CardCidades />
         <Box sx={{ flexGrow: 1, paddingInline: { xs: '2rem', sm: '3rem', md: '10rem' }, marginBlock: '4rem', paddingBlock: '2rem', backgroundColor: '#f5f5f5' }}>
-          <Grid container justifyContent='center' alignItems='center' spacing={2}>
+          <Grid container justifyContent='center' alignItems='center' spacing={2} sx={{flexDirection: {xs: 'column', sm: 'column', md: 'row', lg: 'row', xl: 'row'}}}>
             <Grid item xs={12} sm={12} md={6}>
               <img
                 src={logo}
                 alt="iguassu invest"
-                sx={{
-                  maxWidth: { xs: 200, sm: 200, md: 250 }
+                style={{
+                  width: 250,
+                  height: 'auto',
+                  objectFit: 'contain'
                 }}
               />
             </Grid>

@@ -38,6 +38,7 @@ export function Imovel(props) {
 
     const loadDetail = async () => {
         const response = await detalheImovel(params.id);
+        setImovel(response.data.lista[0]);
         console.log(response);
     }
     const latitude = imovel.latitude;
