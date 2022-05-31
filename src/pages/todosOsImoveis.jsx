@@ -48,20 +48,20 @@ export function TodosOsImoveis() {
   async function getImoveis(page, tipo, cidade) {
     try {
       if (!cidade && !tipo) {
-        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        let res = await filtroImovel({ page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade })
         setImoveis(res.lista);
         setQuantidade(res.quantidade);
       } else if (cidade === "" && tipo) {
-        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        let res = await filtroImovel({ page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade })
         setImoveis(res.lista);
         setQuantidade(res.quantidade);
       } else if (cidade && !tipo) {
-        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        let res = await filtroImovel({ page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade })
         setImoveis(res.lista);
         setQuantidade(res.quantidade);
       }
       else {
-        let res = await filtroImovel({page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade})
+        let res = await filtroImovel({ page: filters?.page, tipo: filters?.tipo, cidade: filters?.cidade })
         setImoveis(res.lista);
         setQuantidade(res.quantidade);
       }
@@ -96,7 +96,7 @@ export function TodosOsImoveis() {
             }}>
               <select
                 className="input_todos_imoveis"
-                style={{ padding: '8px 10px', height: '40px', margin: '8px!important', borderRadius: '6px', border: '1px solid rgb(222, 222, 222', maxWidth: '180px' }}
+                style={{ padding: '8px 4px', height: '40px', margin: '8px!important', borderRadius: '6px', border: '1px solid rgb(222, 222, 222', maxWidth: '180px' }}
                 onChange={(e) => setFilters({ ...filters, cidade: e.target.value })} value={filters?.cidade}>
                 <option>Cidade</option>
                 {cidades.map((cidade, key) => {
@@ -110,7 +110,7 @@ export function TodosOsImoveis() {
               <select
                 className="input_todos_imoveis"
                 style={{
-                  padding: '8px 10px',
+                  padding: '8px 4px',
                   height: '40px',
                   margin: '8px!important',
                   borderRadius: '6px',
@@ -130,7 +130,7 @@ export function TodosOsImoveis() {
               </select>
               <CurrencyFilter />
               <IconButton
-                // onClick={() => navigate('/todososimoveis', { state: { cidade: { codigo: filters?.cidade }, tipo: { codigo: filters?.tipo }, min: filters?.min, max: filters?.max } })}
+                onClick={handleSubmit}
                 sx={{
                   display: { xs: 'none', sm: 'none', md: 'flex', lg: 'flex', xl: 'flex' },
                   color: "#fff",
@@ -149,7 +149,7 @@ export function TodosOsImoveis() {
                 <SearchIcon fontSize="small" />
               </IconButton>
               <Box
-                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}
+                sx={{ display: { xs: 'flex', sm: 'flex', md: 'none', lg: 'none', xl: 'none' }, justifyContent: 'center', alignItems: 'center', width: '100%' }}
                 onClick={handleSubmit}
               >
                 <Button variant="contained">Buscar</Button>
