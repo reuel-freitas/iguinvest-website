@@ -38,8 +38,9 @@ export const detalheImovel = async id => {
 
 export const filtroImovel = async (data) => {
     try {
+        console.log(data)
         const { page, tipo = '', cidade = '' } = data
-        let url = `https://sleepy-bayou-22688.herokuapp.com/api/imoveisDisponiveis/${page ? page : '1'}${tipo ? `/${tipo}` : ''}${cidade ? `/${cidade}` : ''}`
+        let url = `https://sleepy-bayou-22688.herokuapp.com/api/imoveisDisponiveis/${page ? page : '1'}${tipo ? `/${tipo}` : cidade ? '/0' : ''}${cidade ? `/${cidade}` : ''}`
         const response = await axios.get(url);
         return response.data
     } catch (error) {
