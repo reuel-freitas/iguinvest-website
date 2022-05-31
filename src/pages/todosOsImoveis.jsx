@@ -6,16 +6,14 @@ import { cidadesDisponiveis, filtroImovel, tiposdeImoveisDisponiveis } from "../
 import { Box, Button, IconButton } from "@mui/material";
 import { CurrencyFilter } from "../components/CurrencyFilter";
 import { AppContext } from "../contexts/AppContext";
+import { ImoveisContext } from "../contexts/ImoveisContext";
 import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
 
 export function TodosOsImoveis() {
 
   const location = useLocation();
   const { setLoading } = useContext(AppContext)
-
-  const [tipos, setTipos] = useState([]);
-  const [cidades, setCidades] = useState([]);
+  const { tipos, cidades } = useContext(ImoveisContext);
   const [imoveis, setImoveis] = useState([])
   const [quantidade, setQuantidade] = useState([]);
 
@@ -33,12 +31,8 @@ export function TodosOsImoveis() {
 
   const loadData = async () => {
     setLoading(true)
-    const cidades = await cidadesDisponiveis(setLoading)
-    setCidades(cidades.lista);
-    const res = await tiposdeImoveisDisponiveis(setLoading)
-    setTipos(res.lista);
-    setLoading(false)
     await getImoveis(filters?.page, filters?.tipo, filters?.cidade)
+    setLoading(false)
   }
 
   let quantidadeImoveis = quantidade;

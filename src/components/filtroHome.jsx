@@ -14,14 +14,12 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-function FiltroHome() {
+function FiltroHome({ tipos, cidades }) {
 
   const navigate = useNavigate();
 
   const { setLoading } = useContext(AppContext);
 
-  const [cidades, setCidades] = useState([]);
-  const [tipos, setTipos] = useState([]);
   const [filters, setFilters] = React.useState({
     open: false,
     tipo: "",
@@ -29,15 +27,6 @@ function FiltroHome() {
     min: null,
     max: null
   });
-
-  useEffect(() => { loadData() }, []);
-
-  const loadData = async () => {
-    const cidades = await cidadesDisponiveis(setLoading)
-    setCidades(cidades.lista);
-    const res = await tiposdeImoveisDisponiveis(setLoading)
-    setTipos(res.lista);
-  }
 
   const handleChange = ({ target }) => {
     setFilters({ ...filters, [target.name]: target.value });

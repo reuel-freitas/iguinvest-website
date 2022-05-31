@@ -9,18 +9,21 @@ import { AppContext, AppProvider } from './contexts/AppContext';
 import './App.css';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './config/theme'
+import { ImoveisProvider } from './contexts/ImoveisContext';
 
 function App() {
   const { loading } = useContext(AppContext)
   return (
     <ThemeProvider theme={theme}>
       <AppProvider>
-        <div>
-          <Header />
-          <AppRoutes />
-          <Footer />
-          {loading && <Loading />}
-        </div>
+        <ImoveisProvider>
+          <div>
+            <Header />
+            <AppRoutes />
+            <Footer />
+            {loading && <Loading />}
+          </div>
+        </ImoveisProvider>
       </AppProvider>
     </ThemeProvider>
   );
